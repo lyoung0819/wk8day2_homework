@@ -126,6 +126,85 @@
                     ]
                 }
             ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "\n// New classes for funzies\n\nclass HobbitAttack implements Attackable{\n    attack(): string {\n        return ' usually shuns fighting, but grabbed a sling shot and a rock and is not afraid to use it...'\n    }\n}\n\nclass HobbitDefense implements Defendable{\n    defend(): string {\n        return ' ran away.'\n    }\n}\n\nclass DragonAttack implements Attackable{\n    attack(): string {\n        return ' is attacking by breathing fire!'\n    }\n}\n\nclass DragonDefense implements Defendable{\n    defend(): string {\n        return ' is defending with its scales.'\n    }\n}\n\n\nclass Hobbit extends Character {\n    attackAbility$: Attackable = new HobbitAttack()\n    defendAbility$: Defendable = new HobbitDefense()\n}\n\nclass Dragon extends Character {\n    protected attackAbility$: Attackable = new DragonAttack()\n    defendAbility$: Defendable = new DragonDefense()\n}\n\nlet bilbo = new Hobbit('Bilbo Baggins')\nlet smaug = new Dragon('Smaug')"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "bilbo.attack()"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[32m'Bilbo Baggins usually shuns fighting, but grabbed a sling shot and a rock and is not afraid to use it...'\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "bilbo.defend()"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[32m'Bilbo Baggins ran away.'\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "smaug.attack()"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[32m'Smaug is attacking by breathing fire!'\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "smaug.defend()"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[32m'Smaug is defending with its scales.'\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
