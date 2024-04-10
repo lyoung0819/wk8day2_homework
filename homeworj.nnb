@@ -10,9 +10,122 @@
         {
             "language": "typescript",
             "source": [
-                "//Solution\n\ninterface Attackable{\n    attack():void\n}\ninterface Defendable{\n    defend():void\n}\ninterface Collectable{\n    collect():void\n}\n\n\nclass attack implements Attackable{\n    attack(){\n        console.log(\"You are attacking!\")\n    }\n}\nclass defend implements Defendable{\n    defend(){\n        console.log(\"You are defending yourself from an attack!\")\n    }\n}\nclass collect implements Collectable{\n    collect(){\n        console.log(\"You are collecting gold!\")\n    }\n}\n\n\nabstract class Character implements Attackable, Defendable, Collectable{\n    protected attackAbility$: Attackable\n    protected defendAbility$: Defendable\n    protected collectAbility$: Collectable\n    \n    set attackAbility(aa:Attackable){\n        this.attackAbility$=aa\n    }\n    \n    set defendAbility(da:Defendable){\n        this.defendAbility$=da\n    }\n    \n    set collectAbility(ca:Collectable){\n        this.collectAbility$=ca\n    }\n   \n    attack():void{\n        this.attackAbility$.attack()\n    }\n    \n    defend():void{\n        this.defendAbility$.defend()\n    }\n    \n    collect():void{\n        this.collectAbility$.collect()\n    }\n}\n\nclass Orges extends Character {\n    attackAbility$ = new attack()\n    defendAbility$ = new defend()\n    collectAbility$ = new collect()\n} // needs to fight with club and defends with shield\n\nclass Peons extends Character {\n    attackAbility$ = new attack()\n    defendAbility$ = new defend()\n    collectAbility$ = new collect()\n} // needs to fight with club and defends with shield\n\nclass Knight extends Character {\n    attackAbility$ = new attack()\n    defendAbility$ = new defend()\n    collectAbility$ = new collect()\n} // needs to fight with sword and defend with armor\n\nclass Archer extends Character {\n    attackAbility$ = new attack()\n    defendAbility$ = new defend()\n    collectAbility$ = new collect()\n} // needs to fight with bow and arrow and only has tunic for defense"
+                "//Solution\n// interface for attackable\ninterface Attackable{\n    attack():string // any implementation of this interface will always need an attack()\n}\ninterface Defendable{\n    defend():string\n}\n\n\n// Attack Classes\nclass AttackWithClub implements Attackable{\n    attack(): string {\n        return ' is attacking with a club!'\n    }\n}\n\nclass AttackWithSword implements Attackable {\n    attack(): string {\n        return ' is attacking with a sword!'\n    }\n}\n\nclass AttackWithBow implements Attackable{\n    attack(): string {\n        return ' is shooting a bow and arrow!'\n    }\n}\n\nclass DefendWithShield implements Defendable{\n    defend(): string {\n        return ' is defending with a shield!'\n    }\n}\n\nclass DefendWithArmmor implements Defendable{\n    defend(): string {\n        return ' is defending with armor!'\n    }\n}\n\nclass DefendWithTunic implements Defendable{\n    defend(): string {\n        return ' has no defense but their tunic...'\n    }\n}\n\nabstract class Character implements Attackable, Defendable{\n    protected attackAbility$: Attackable\n    protected defendAbility$: Defendable\n\n    constructor(private _name:string, private _gold:number = 0){}\n    \n    get name():string{\n        return this._name\n    }\n\n    get gold():number{\n        return this._gold\n    }\n    \n    public attack():string{\n        return this.name + this.attackAbility$.attack()\n    }\n\n    public defend(): string {\n        return this.name + this.defendAbility$.defend()\n    }\n\n    public collectGold(goldAmount:number):void{\n        this._gold += goldAmount;\n        console.log(`${this.name} has collected ${goldAmount} gold. Their total gold is now ${this.gold}`)\n    }\n\n}\n\nclass Orges extends Character {\n    attackAbility$ = new AttackWithClub()\n    defendAbility$ = new DefendWithShield()\n} // needs to fight with club and defends with shield\n\nclass Peons extends Character {\n    attackAbility$ = new AttackWithClub()\n    defendAbility$ = new DefendWithShield()\n} // needs to fight with club and defends with shield\n\nclass Knight extends Character {\n    attackAbility$ = new AttackWithSword()\n    defendAbility$ = new DefendWithArmmor()\n} // needs to fight with sword and defend with armor\n\nclass Archer extends Character {\n    attackAbility$ = new AttackWithBow()\n    defendAbility$ = new DefendWithTunic()\n} // needs to fight with bow and arrow and only has tunic for defense"
             ],
             "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "// Create instances of differen Characters\n\nlet shrek = new Orges('Shrek')\nlet sam = new Peons('Sam')\nlet brian = new Knight('Brian')\nlet legolas = new Archer('Legolas')\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "let allChars: Character[] = [shrek, sam, brian, legolas]\nconsole.log(allChars)"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[",
+                                "  Orges {",
+                                "    _name: 'Shrek',",
+                                "    _gold: 0,",
+                                "    'attackAbility$': AttackWithClub {},",
+                                "    'defendAbility$': DefendWithShield {}",
+                                "  },",
+                                "  Peons {",
+                                "    _name: 'Sam',",
+                                "    _gold: 0,",
+                                "    'attackAbility$': AttackWithClub {},",
+                                "    'defendAbility$': DefendWithShield {}",
+                                "  },",
+                                "  Knight {",
+                                "    _name: 'Brian',",
+                                "    _gold: 0,",
+                                "    'attackAbility$': AttackWithSword {},",
+                                "    'defendAbility$': DefendWithArmmor {}",
+                                "  },",
+                                "  Archer {",
+                                "    _name: 'Legolas',",
+                                "    _gold: 0,",
+                                "    'attackAbility$': AttackWithBow {},",
+                                "    'defendAbility$': DefendWithTunic {}",
+                                "  }",
+                                "]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "function getRandomNumber():number {\n    return Math.ceil(Math.random() * 25)\n}"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "for (let char of allChars){\n    console.log(char.attack())\n    console.log(char.defend())\n    char.collectGold(getRandomNumber())\n}"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "Shrek is attacking with a club!",
+                                "Shrek is defending with a shield!",
+                                "Shrek has collected 24 gold. their total gold is now 33",
+                                "Sam is attacking with a club!",
+                                "Sam is defending with a shield!",
+                                "Sam has collected 13 gold. their total gold is now 18",
+                                "Brian is attacking with a sword!",
+                                "Brian is defending with armor!",
+                                "Brian has collected 12 gold. their total gold is now 21",
+                                "Legolas is shooting a bow and arrow!",
+                                "Legolas has no defense but their tunic...",
+                                "Legolas has collected 7 gold. their total gold is now 20",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "// change the attackAbility accessibiliy"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "brian.attackAbility$ = new AttackWithBow\nbrian.attack()"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[32m'Brian is shooting a bow and arrow!'\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
