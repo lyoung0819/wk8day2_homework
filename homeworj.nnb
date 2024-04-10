@@ -1,0 +1,18 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "Design a flexible OOP system to describe characters in a RPG game\n\nThere are 4 Unique Characters which use Different Types of Attacking mechanisms and Defending mechanisms.\n\n- Orges - fights with club and defends with shield\n- Peons - fights with club and defends with shield\n- Knights - fights with a Sword and defends with Armor\n- Archer - fights with Bow and Arrow and has only is tunic to protect them\n\n- All Characters can collect gold and this will always be the same for every new type of character\n\nAt the end of this each character should be able to attack and defend and collect gold. If needed any character should be able to change his fighting style, say if a knight losing his sword, but finds a club he should be able to change his fighting mechanism to use the club\n\n<b>Hint: </b> To complete this assignment you will need multiple classes and interfaces and an Abstract class\n\nYou can use our [Final Rubber Ducky Walkthrough](#rubber) example as a guide "
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "//Solution\n\ninterface Attackable{\n    attack():void\n}\ninterface Defendable{\n    defend():void\n}\ninterface Collectable{\n    collect():void\n}\n\n\nclass attack implements Attackable{\n    attack(){\n        console.log(\"You are attacking!\")\n    }\n}\nclass defend implements Defendable{\n    defend(){\n        console.log(\"You are defending yourself from an attack!\")\n    }\n}\nclass collect implements Collectable{\n    collect(){\n        console.log(\"You are collecting gold!\")\n    }\n}\n\n\nabstract class Character implements Attackable, Defendable, Collectable{\n    protected attackAbility$: Attackable\n    protected defendAbility$: Defendable\n    protected collectAbility$: Collectable\n    \n    set attackAbility(aa:Attackable){\n        this.attackAbility$=aa\n    }\n    \n    set defendAbility(da:Defendable){\n        this.defendAbility$=da\n    }\n    \n    set collectAbility(ca:Collectable){\n        this.collectAbility$=ca\n    }\n   \n    attack():void{\n        this.attackAbility$.attack()\n    }\n    \n    defend():void{\n        this.defendAbility$.defend()\n    }\n    \n    collect():void{\n        this.collectAbility$.collect()\n    }\n}\n\nclass Orges extends Character {\n    attackAbility$ = new attack()\n    defendAbility$ = new defend()\n    collectAbility$ = new collect()\n} // needs to fight with club and defends with shield\n\nclass Peons extends Character {\n    attackAbility$ = new attack()\n    defendAbility$ = new defend()\n    collectAbility$ = new collect()\n} // needs to fight with club and defends with shield\n\nclass Knight extends Character {\n    attackAbility$ = new attack()\n    defendAbility$ = new defend()\n    collectAbility$ = new collect()\n} // needs to fight with sword and defend with armor\n\nclass Archer extends Character {\n    attackAbility$ = new attack()\n    defendAbility$ = new defend()\n    collectAbility$ = new collect()\n} // needs to fight with bow and arrow and only has tunic for defense"
+            ],
+            "outputs": []
+        }
+    ]
+}
